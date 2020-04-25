@@ -21,12 +21,16 @@ namespace LifeTimes
         static void Main(string[] args)
         {
             var services = new ServiceCollection();
-            services.AddTransient<Transaction>();
+            
+            // services.AddScoped<Transaction>();
+            // services.AddSingleton<Transaction>(); // it will not run Dispose() 
+            services.AddTransient<Transaction>(); // run as many as services GetService
 
             var globalProvider = services.BuildServiceProvider();
             using (var scope = globalProvider.CreateScope())
             {
                 var item = scope.ServiceProvider.GetService<Transaction>();
+                // transaction added multiple times but it will not impact AddScoped or AddSingleton
                 item = scope.ServiceProvider.GetService<Transaction>();
             }
 

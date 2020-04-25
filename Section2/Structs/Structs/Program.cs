@@ -8,16 +8,17 @@ namespace Structs
         static void Main(string[] args)
         {
             int i = 5;
-            //boxing
+            //boxing like int -> Integer etc
             var o = (object) i;
 
             var s = 5;
-            //casting
+            //casting != boxing
             var o2 = (object)s;
             int? j  = 5;
             Console.WriteLine(j.GetType().Name);
 
             var roe = new ReadOnlyEnumerator(new List<int>{1,2});
+            roe.PrintTheFirstElement();
             roe.PrintTheFirstElement();
         }
     }
@@ -25,19 +26,27 @@ namespace Structs
     //code sample taken from : https://blogs.msdn.microsoft.com/seteplia/2018/03/07/the-in-modifier-and-the-readonly-structs-in-c/
     internal class ReadOnlyEnumerator
     {
-        private  List<int>.Enumerator _enumerator;
+        private readonly List<int>.Enumerator _readOnlyEnumerator;
+        
+        private List<int>.Enumerator _nonReadOnlyEnumerator;
  
         public ReadOnlyEnumerator(List<int> list)
         {
-            _enumerator = list.GetEnumerator();
+            _readOnlyEnumerator = list.GetEnumerator();
+            _nonReadOnlyEnumerator = list.GetEnumerator();
         }
  
         public void PrintTheFirstElement()
         {
-            _enumerator.MoveNext();
-            Console.WriteLine(_enumerator.Current);
+            _readOnlyEnumerator.MoveNext(); // readonly is defined, thus you cannot move to the next, always 0
+            _nonReadOnlyEnumerator.MoveNext();
+            Console.WriteLine($"Read only: {_readOnlyEnumerator.Current}, non read only: {_nonReadOnlyEnumerator.Current}");
         }
 
     }
+    
+  
+  
+  
     
 }

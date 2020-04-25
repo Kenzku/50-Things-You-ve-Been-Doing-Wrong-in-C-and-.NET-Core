@@ -9,7 +9,7 @@ namespace Virtual
         public abstract void Run();
         public virtual void Accelerate() 
             => this.speed += 10;
-        public void Stop() 
+        public virtual void Stop() 
             => Console.WriteLine("Stopping the car");
     }
 
@@ -23,7 +23,7 @@ namespace Virtual
   
     public class Ferrari : Car
     {
-        public override sealed void Run()
+        public override void Run()
             => Console.WriteLine($"Ferrari running at speed:{this.speed}");
 
         public override void Accelerate()
@@ -31,7 +31,7 @@ namespace Virtual
         
 
         public new void Stop()
-            => Console.WriteLine("Stopping ferrari");
+            => Console.WriteLine("Stopping ferrari x");
     }
 
     class Program
@@ -46,9 +46,9 @@ namespace Virtual
             ferrari.Accelerate();
 
             ferrari.Run();
-            ferrari.Stop();
+            ferrari.Stop(); // this stops the car not the car, because the Stop in Ferrari is a `new`
             Ferrari realFerrari = (Ferrari)ferrari;
-            realFerrari.Stop();
+            realFerrari.Stop(); // this stops the Ferrari
         }
     }
 }

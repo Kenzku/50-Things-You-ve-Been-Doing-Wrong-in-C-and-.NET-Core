@@ -35,7 +35,7 @@ namespace Singleton
     }
     public sealed class Singleton3
     {
-        static Singleton3 instance;
+        static volatile Singleton3 instance;
         static readonly object locker = new object();
 
         private Singleton3(){}
@@ -57,8 +57,8 @@ namespace Singleton
     }
     public sealed class SingletonLazy
     {
+        // this ensures no matter how many times the lazy.Value is called, only 1 lazy is created.
         static Lazy<SingletonLazy> lazy =  new Lazy<SingletonLazy>(() => new SingletonLazy());
-        static readonly object locker = new object();
 
         private SingletonLazy(){}
 

@@ -13,12 +13,20 @@ namespace Exceptions
         {
             while(true)
             {
-                Console.WriteLine("Enter product name:");
-                var productName = Console.ReadLine();
-                Console.WriteLine("Enter desired price:");
-                var price = decimal.Parse(Console.ReadLine());
-                var prod = new Product(){ Name = productName, Price = price};
-                DoShopping(prod);
+                try
+                {
+                    Console.WriteLine("Enter product name:");
+                    var productName = Console.ReadLine();
+                    Console.WriteLine("Enter desired price:");
+                    var price = decimal.Parse(Console.ReadLine());
+                    var prod = new Product() {Name = productName, Price = price};
+                    DoShopping(prod);
+                }
+                catch
+                {
+                    Console.Write("An Error occured. Please retry.");
+                }
+               
             }
         }
 
